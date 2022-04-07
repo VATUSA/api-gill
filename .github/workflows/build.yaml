@@ -1,11 +1,7 @@
-name: Build
+name: Build Image
 on:
   pull_request:
     types: [opened, reopened]
-  push:
-    branches:
-      - main
-      - develop
 jobs:
   Build:
     runs-on: ubuntu-latest

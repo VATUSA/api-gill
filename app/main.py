@@ -25,6 +25,10 @@ def create_app() -> FastAPI:
         def redirect_to_swagger() -> RedirectResponse:
             return RedirectResponse("/docs")
 
+    @app.get("/health", include_in_schema=False)
+    def health_check() -> str:
+        return "OK"
+
     app.add_event_handler("startup", start_app_handler(app))
     app.add_event_handler("shutdown", stop_app_handler(app))
 
