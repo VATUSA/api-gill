@@ -1,5 +1,7 @@
 import os
 
+import databases
+import sqlalchemy
 from dotenv import load_dotenv
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
@@ -29,6 +31,10 @@ def create_app() -> FastAPI:
     def health_check() -> str:
         return "OK"
 
+    metadata = sqlalchemy.MetaData()
+    database = databases.Database(os.getenv("DATABASE_URL"))
+    app.state.database = database
+    app.state.metadata = metadata
     app.add_event_handler("startup", start_app_handler(app))
     app.add_event_handler("shutdown", stop_app_handler(app))
 

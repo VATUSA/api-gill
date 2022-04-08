@@ -13,5 +13,6 @@
 4. Install pre-commit hooks: `pre-commit install`
 
 ## Running the app
-* Using docker: `docker-compose up -d`
+* Using docker: `docker-compose up -d` docker will spin up a database, run the db migrations and start the api
 * Without docker: `python -m alembic upgrade head && python -m uvicorn app.main:app --reload`
+* Note, without docker you will need to adjust various environment settings to connect to a local test database.

@@ -1,8 +1,19 @@
+# flake8: noqa
 from logging.config import fileConfig
 
 from alembic import context
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
+
+from app.models.base_model import BaseMeta
+from app.models.comment import Comment
+from app.models.facility import Facility
+from app.models.policy import Policy
+from app.models.role import Role
+from app.models.ticket import Ticket
+from app.models.training import Training
+from app.models.user import User
+from app.models.website_log import WebsiteLog
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -14,10 +25,11 @@ if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
 # add your model"s MetaData object here
+
 # for "autogenerate" support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-target_metadata = None
+target_metadata = BaseMeta.metadata
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
