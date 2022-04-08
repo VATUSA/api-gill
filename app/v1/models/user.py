@@ -1,11 +1,28 @@
+import enum
 from datetime import datetime
 
 import ormar
 
-from app.models.base_model import BaseMeta
-from app.models.facility import Facility
-from app.models.rating import Rating
-from app.models.role import Role
+from app.v1.models.base_model import BaseMeta
+from app.v1.models.facility import Facility
+from app.v1.models.role import Role
+
+
+class Rating(enum.Enum):
+    INAC = -1
+    SUS = 0
+    OBS = 1
+    S1 = 2
+    S2 = 3
+    S3 = 4
+    C1 = 5
+    C2 = 6
+    C3 = 7
+    I1 = 8
+    I2 = 9
+    I3 = 10
+    SUP = 11
+    ADM = 12
 
 
 class User(ormar.Model):
@@ -19,7 +36,7 @@ class User(ormar.Model):
     full_name: str = f"{preferred_first_name} {preferred_last_name}"
     full_name_cid: str = f"{full_name} - {id}"
     email: str = ormar.Text()
-    rating: Rating = ormar.ForeignKey(Rating, related_name="rating_user")
+    rating: Rating = ormar.Integer(choices=list(Rating))
     discord: str = ormar.Text()
     transfer_override: bool = ormar.Boolean(default=False)
     is_home_region: bool = ormar.Boolean(default=True)

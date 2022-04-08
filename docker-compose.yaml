@@ -4,7 +4,7 @@ services:
   api:
     build: .
     container_name: api
-    command: bash -c "python -m alembic upgrade head && python -m uvicorn --host=0.0.0.0 app.main:app"
+    command: bash -c "python -m alembic upgrade head && python -m uvicorn --host=0.0.0.0 app.v1.main:api"
     restart: on-failure
     ports:
       - "8000:8000"

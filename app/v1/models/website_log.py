@@ -3,7 +3,7 @@ from datetime import datetime
 import ormar
 import pydantic
 
-from app.models.base_model import BaseMeta
+from app.v1.models.base_model import BaseMeta
 
 
 class WebsiteLog(ormar.Model):

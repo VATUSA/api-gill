@@ -7,15 +7,15 @@ from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 from starlette.responses import RedirectResponse
 
-from app.core.events import start_app_handler
-from app.core.events import stop_app_handler
+from app.v1.core.events import start_app_handler
+from app.v1.core.events import stop_app_handler
 
 load_dotenv()
 
 
 def create_app() -> FastAPI:
-    app = FastAPI()
-    app.add_middleware(
+    api = FastAPI()
+    api.add_middleware(
         CORSMiddleware,
         allow_credentials=True,
         allow_methods=["*"],
@@ -23,22 +23,22 @@ def create_app() -> FastAPI:
     )
 
     if os.getenv("ENVIRONMENT", "local") == "local":
-        @app.get("/", include_in_schema=False)
+        @api.get("/", include_in_schema=False)
         def redirect_to_swagger() -> RedirectResponse:
             return RedirectResponse("/docs")
 
-    @app.get("/health", include_in_schema=False)
+    @api.get("/health", include_in_schema=False)
     def health_check() -> str:
         return "OK"
 
     metadata = sqlalchemy.MetaData()
     database = databases.Database(os.getenv("DATABASE_URL"))
-    app.state.database = database
-    app.state.metadata = metadata
-    app.add_event_handler("startup", start_app_handler(app))
-    app.add_event_handler("shutdown", stop_app_handler(app))
+    api.state.database = database
+    api.state.metadata = metadata
+    api.add_event_handler("startup", start_app_handler(api))
+    api.add_event_handler("shutdown", stop_app_handler(api))
 
-    return app
+    return api
 
 
-app = create_app()
+api = create_app()

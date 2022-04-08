@@ -5,15 +5,18 @@ from alembic import context
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
-from app.models.base_model import BaseMeta
-from app.models.comment import Comment
-from app.models.facility import Facility
-from app.models.policy import Policy
-from app.models.role import Role
-from app.models.ticket import Ticket
-from app.models.training import Training
-from app.models.user import User
-from app.models.website_log import WebsiteLog
+from app.v1.models.base_model import BaseMeta
+from app.v1.models.comment import Comment
+from app.v1.models.facility import Facility
+from app.v1.models.policy import Policy
+from app.v1.models.promotion import Promotion
+from app.v1.models.role import Role
+from app.v1.models.solo_cert import SoloCert
+from app.v1.models.ticket import Ticket
+from app.v1.models.training import Training
+from app.v1.models.transfer import Transfer
+from app.v1.models.user import User
+from app.v1.models.website_log import WebsiteLog
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

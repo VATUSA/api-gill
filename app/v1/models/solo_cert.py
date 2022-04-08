@@ -2,8 +2,8 @@ from datetime import datetime
 
 import ormar
 
-from app.models.base_model import BaseMeta
-from app.models.user import User
+from app.v1.models.base_model import BaseMeta
+from app.v1.models.user import User
 
 
 class SoloCert(ormar.Model):

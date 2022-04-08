@@ -3,9 +3,9 @@ from datetime import datetime
 
 import ormar
 
-from app.models.base_model import BaseMeta
-from app.models.facility import Facility
-from app.models.user import User
+from app.v1.models.base_model import BaseMeta
+from app.v1.models.facility import Facility
+from app.v1.models.user import User
 
 
 class TransferStatus(enum.Enum):

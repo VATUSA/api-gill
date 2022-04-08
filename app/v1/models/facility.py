@@ -2,7 +2,7 @@ from datetime import datetime
 
 import ormar
 
-from app.models.base_model import BaseMeta
+from app.v1.models.base_model import BaseMeta
 
 
 class Facility(ormar.Model):

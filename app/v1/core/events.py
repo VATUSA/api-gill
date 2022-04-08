@@ -3,8 +3,8 @@ from typing import Callable
 from fastapi import FastAPI
 from loguru import logger
 
-from app.database.events import close_database_connection
-from app.database.events import open_database_connection
+from app.v1.database.events import close_database_connection
+from app.v1.database.events import open_database_connection
 
 
 def start_app_handler(app: FastAPI) -> Callable:  # type: ignore

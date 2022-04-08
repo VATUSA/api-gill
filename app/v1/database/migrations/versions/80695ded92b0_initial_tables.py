@@ -1,8 +1,8 @@
-"""Added tables
+"""Initial tables
 
-Revision ID: 836cf9c3533d
+Revision ID: 80695ded92b0
 Revises:
-Create Date: 2022-04-07 23:41:05.566959
+Create Date: 2022-04-08 11:41:26.396159
 
 """
 import sqlalchemy as sa
@@ -10,7 +10,7 @@ from alembic import op
 
 
 # revision identifiers, used by Alembic.
-revision = '836cf9c3533d'
+revision = '80695ded92b0'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -36,13 +36,6 @@ def upgrade() -> None:
         sa.Column('category', sa.Text(), nullable=False),
         sa.Column('created_at', sa.DateTime(), nullable=False),
         sa.Column('updated_at', sa.DateTime(), nullable=False),
-        sa.PrimaryKeyConstraint('id'),
-    )
-    op.create_table(
-        'ratings',
-        sa.Column('id', sa.Integer(), nullable=False),
-        sa.Column('name', sa.Text(), nullable=False),
-        sa.Column('name_long', sa.Text(), nullable=False),
         sa.PrimaryKeyConstraint('id'),
     )
     op.create_table(
@@ -73,7 +66,7 @@ def upgrade() -> None:
         sa.Column('preferred_first_name', sa.Text(), nullable=False),
         sa.Column('preferred_last_name', sa.Text(), nullable=False),
         sa.Column('email', sa.Text(), nullable=False),
-        sa.Column('rating', sa.Integer(), nullable=True),
+        sa.Column('rating', sa.Integer(), nullable=False),
         sa.Column('discord', sa.Text(), nullable=False),
         sa.Column('transfer_override', sa.Boolean(), nullable=True),
         sa.Column('is_home_region', sa.Boolean(), nullable=True),
@@ -82,7 +75,6 @@ def upgrade() -> None:
         sa.Column('created_at', sa.DateTime(), nullable=False),
         sa.Column('updated_at', sa.DateTime(), nullable=False),
         sa.ForeignKeyConstraint(['facility'], ['facilities.id'], name='fk_users_facilities_id_facility'),
-        sa.ForeignKeyConstraint(['rating'], ['ratings.id'], name='fk_users_ratings_id_rating'),
         sa.PrimaryKeyConstraint('id'),
     )
     op.create_table(
@@ -94,6 +86,32 @@ def upgrade() -> None:
         sa.Column('created_at', sa.DateTime(), nullable=False),
         sa.Column('updated_at', sa.DateTime(), nullable=False),
         sa.ForeignKeyConstraint(['user'], ['users.id'], name='fk_comments_users_id_user'),
+        sa.PrimaryKeyConstraint('id'),
+    )
+    op.create_table(
+        'promotions',
+        sa.Column('id', sa.Integer(), nullable=False),
+        sa.Column('user', sa.Integer(), nullable=True),
+        sa.Column('submitter', sa.Integer(), nullable=True),
+        sa.Column('old_rating', sa.Integer(), nullable=False),
+        sa.Column('new_rating', sa.Integer(), nullable=False),
+        sa.Column('created_at', sa.DateTime(), nullable=False),
+        sa.Column('updated_at', sa.DateTime(), nullable=False),
+        sa.ForeignKeyConstraint(['submitter'], ['users.id'], name='fk_promotions_users_id_submitter'),
+        sa.ForeignKeyConstraint(['user'], ['users.id'], name='fk_promotions_users_id_user'),
+        sa.PrimaryKeyConstraint('id'),
+    )
+    op.create_table(
+        'solo_certs',
+        sa.Column('id', sa.Integer(), nullable=False),
+        sa.Column('user', sa.Integer(), nullable=True),
+        sa.Column('submitter', sa.Integer(), nullable=True),
+        sa.Column('position', sa.Text(), nullable=False),
+        sa.Column('end', sa.DateTime(), nullable=False),
+        sa.Column('created_at', sa.DateTime(), nullable=False),
+        sa.Column('updated_at', sa.DateTime(), nullable=False),
+        sa.ForeignKeyConstraint(['submitter'], ['users.id'], name='fk_solo_certs_users_id_submitter'),
+        sa.ForeignKeyConstraint(['user'], ['users.id'], name='fk_solo_certs_users_id_user'),
         sa.PrimaryKeyConstraint('id'),
     )
     op.create_table(
@@ -119,6 +137,27 @@ def upgrade() -> None:
         sa.Column('updated_at', sa.DateTime(), nullable=False),
         sa.ForeignKeyConstraint(['submitter'], ['users.id'], name='fk_trainings_users_id_submitter'),
         sa.ForeignKeyConstraint(['user'], ['users.id'], name='fk_trainings_users_id_user'),
+        sa.PrimaryKeyConstraint('id'),
+    )
+    op.create_table(
+        'transfers',
+        sa.Column('id', sa.Integer(), nullable=False),
+        sa.Column('user', sa.Integer(), nullable=True),
+        sa.Column('facility_from', sa.Integer(), nullable=True),
+        sa.Column('facility_to', sa.Integer(), nullable=True),
+        sa.Column('reasion', sa.Text(), nullable=False),
+        sa.Column('status', sa.Text(), nullable=False),
+        sa.Column('created_at', sa.DateTime(), nullable=False),
+        sa.Column('updated_at', sa.DateTime(), nullable=False),
+        sa.ForeignKeyConstraint(
+            ['facility_from'], ['facilities.id'],
+            name='fk_transfers_facilities_id_facility_from',
+        ),
+        sa.ForeignKeyConstraint(
+            ['facility_to'], ['facilities.id'],
+            name='fk_transfers_facilities_id_facility_to',
+        ),
+        sa.ForeignKeyConstraint(['user'], ['users.id'], name='fk_transfers_users_id_user'),
         sa.PrimaryKeyConstraint('id'),
     )
     op.create_table(
@@ -159,13 +198,15 @@ def downgrade() -> None:
     # ### commands auto generated by Alembic - please adjust! ###
     op.drop_table('users_roles')
     op.drop_table('users_facilitys')
+    op.drop_table('transfers')
     op.drop_table('trainings')
     op.drop_table('tickets')
+    op.drop_table('solo_certs')
+    op.drop_table('promotions')
     op.drop_table('comments')
     op.drop_table('users')
     op.drop_table('website_logs')
     op.drop_table('roles')
-    op.drop_table('ratings')
     op.drop_table('policies')
     op.drop_table('facilities')
     # ### end Alembic commands ###
