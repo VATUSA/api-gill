@@ -12,6 +12,11 @@
 3. Install dependencies: `pip install -r requirements.txt`
 4. Install pre-commit hooks: `pre-commit install`
 
+## Development
+* Add a migration: `python -m alembic revision --autogenerate -m "Added ..."`, migrations will automaticlly be run by docker-compose.
+* Create tests for any code possible. Run tests with `pytest --cache-clear --cov=app tests > coverage.txt`, include the coverage report in commits.
+
 ## Running the app
-* Using docker: `docker-compose up -d`
-* Without docker: `python -m alembic upgrade head && python -m uvicorn app.main:app --reload`
+* Using docker: `docker-compose up -d --force-recreate` docker will spin up a database, run the db migrations and start the api
+* Without docker: `python -m alembic upgrade head && python -m uvicorn app.v1.main:api --reload`
+* Note, without docker you will need to adjust various environment settings to connect to a local test database.
