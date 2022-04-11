@@ -23,12 +23,7 @@ def upgrade() -> None:
         sa.Column("first_name", sa.String(length=255)),
         sa.Column("last_name", sa.String(length=255)),
         sa.Column("email", sa.String(length=255)),
-        sa.Column(
-            "rating", sa.Enum(
-                "INAC", "SUS", "OBS", "S1", "S2", "S3", "C1",
-                "C2", "C3", "I1", "I2", "I3", "SUP", "ADM", name="rating",
-            ),
-        ),
+        sa.Column("rating", sa.Integer),
         sa.column("created_at", sa.DateTime),
         sa.column("updated_at", sa.DateTime),
     )
