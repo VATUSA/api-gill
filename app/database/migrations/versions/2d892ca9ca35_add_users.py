@@ -19,13 +19,13 @@ depends_on = None
 def upgrade() -> None:
     op.create_table(
         "users",
-        sa.Column("id", sa.Integer, primary_key=True),
+        sa.Column("cid", sa.Integer, primary_key=True),
         sa.Column("first_name", sa.String(length=255)),
         sa.Column("last_name", sa.String(length=255)),
         sa.Column("email", sa.String(length=255)),
         sa.Column("rating", sa.Integer),
-        sa.column("created_at", sa.DateTime),
-        sa.column("updated_at", sa.DateTime),
+        sa.Column("created_at", sa.DateTime, server_default=sa.text("now()")),
+        sa.Column("updated_at", sa.DateTime, server_default=sa.text("now()")),
     )
     pass
 
