@@ -13,6 +13,8 @@ services:
       - database
     networks:
       - vatusa
+    volumes:
+      - .:/app
   migration:
     build: .
     container_name: migration
@@ -23,6 +25,8 @@ services:
       - database
     networks:
       - vatusa
+    volumes:
+      - .:/app
   database:
     image: postgres:14
     container_name: database
