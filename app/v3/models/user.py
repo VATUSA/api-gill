@@ -1,11 +1,12 @@
 import enum
 from datetime import datetime
+from uuid import UUID
 
 import ormar
 
-from app.v1.models.base_model import BaseMeta
-from app.v1.models.facility import Facility
-from app.v1.models.role import Role
+from app.v3.models.base_model import BaseMeta
+from app.v3.models.facility import Facility
+from app.v3.models.role import Role
 
 
 class Rating(enum.Enum):
@@ -28,7 +29,7 @@ class Rating(enum.Enum):
 class User(ormar.Model):
     class Meta(BaseMeta):
         tablename = "users"
-    id: int = ormar.Integer(primary_key=True)
+    id: UUID = ormar.UUID(primary_key=True)
     first_name: str = ormar.Text()
     last_name: str = ormar.Text()
     preferred_first_name: str = ormar.Text()

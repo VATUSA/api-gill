@@ -16,7 +16,6 @@ coverage==6.3.2
 databases==0.5.5
 distlib==0.3.4
 fastapi==0.75.1
-fastapi-crudrouter==0.8.5
 filelock==3.6.0
 flake8==4.0.1
 greenlet==1.1.2
@@ -45,7 +44,6 @@ pydantic==1.9.0
 pyflakes==2.4.0
 PyJWT==2.3.0
 pyparsing==3.0.7
-PyPika==0.48.9
 pytest==7.1.1
 pytest-cov==3.0.0
 pytest-order==1.0.1
