@@ -15,6 +15,7 @@
 ## Development
 * Add a migration: `python -m alembic revision --autogenerate -m "Added ..."`, migrations will automaticlly be run by docker-compose.
 * Create tests for any code possible. Run tests with `pytest --cache-clear --cov=app tests > coverage.txt`, include the coverage report in commits.
+* I'd recommend just using the database for active development, especially if you use WSL, and only use the full api and postgres compose setup for all up testing.
 
 ## Running the app
 * Using docker: `docker-compose up -d --force-recreate` docker will spin up a database, run the db migrations and start the api
