@@ -5,8 +5,8 @@ from alembic import context
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
+from app.v3.database.connection import metadata
 from app.v3.models.api_access_log import ApiAccessLog
-from app.v3.models.base_model import BaseMeta
 from app.v3.models.comment import Comment
 from app.v3.models.facility import Facility
 from app.v3.models.policy import Policy
@@ -33,7 +33,7 @@ if config.config_file_name is not None:
 # for "autogenerate" support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-target_metadata = BaseMeta.metadata
+target_metadata = metadata
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:

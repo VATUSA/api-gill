@@ -12,10 +12,12 @@ class UserRepository:
 
     def __init__(self) -> None:
         self.logger = loguru.logger
-        self.debug = os.getenv("DEBUG", False)
+        self.debug = os.getenv("DEBUG", "false") == "true"
 
     async def get_users(self) -> list[User | None]:
-        users = await User.objects.all()
+        users = await User.objects.select_related("facility")\
+            .select_related("visiting_facilities")\
+            .select_related("roles").all()
         if self.debug:
             self.logger.debug(f"{len(users)} users found.")
         return users
