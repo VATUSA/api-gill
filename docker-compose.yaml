@@ -4,12 +4,36 @@ services:
   api:
     build: .
     container_name: api
-    command: bash -c "python -m alembic upgrade head && python -m uvicorn --host=0.0.0.0 app.v1.main:api"
     restart: on-failure
+    command: python -m uvicorn app.v3.main:api --host 0.0.0.0 --port 8000 --reload
     ports:
       - "8000:8000"
     environment:
-      DATABASE_URL: "postgresql://postgres:qwerty123@database:5400/api"
+      DATABASE_HOST: database
+      DATABASE_PORT: 5400
+      DATABASE_DATABASE: api
+      DATABASE_USER: postgres
+      DATABASE_PASSWORD: qwerty123
+      REDIS_PORT: 6379
+    volumes:
+      - .:/app
+    depends_on:
+      - migrate
+      - database
+      - redis
+    networks:
+      - vatusa
+  migrate:
+    build: .
+    container_name: migrate
+    command: python -m alembic upgrade head
+    environment:
+      DATABASE_HOST: database
+      DATABASE_PORT: 5400
+      DATABASE_DATABASE: api
+      DATABASE_USER: postgres
+      DATABASE_PASSWORD: qwerty123
+      REDIS_PORT: 6379
     depends_on:
       - database
     networks:
@@ -28,6 +52,13 @@ services:
       - "5400:5400"
     volumes:
       - postgres-data:/var/lib/postgresql/data/
+    networks:
+      - vatusa
+  redis:
+    image: redis:alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
     networks:
       - vatusa
 volumes:

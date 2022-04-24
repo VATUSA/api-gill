@@ -1,9 +1,10 @@
 import enum
 from datetime import datetime
+from uuid import UUID
 
 import ormar
 
-from app.v1.models.base_model import BaseMeta
+from app.v3.models.base_model import BaseMeta
 
 
 class PolicyCategory(enum.Enum):
@@ -16,7 +17,7 @@ class PolicyCategory(enum.Enum):
 class Policy(ormar.Model):
     class Meta(BaseMeta):
         tablename = "policies"
-    id: int = ormar.Integer(primary_key=True)
+    id: UUID = ormar.UUID(primary_key=True)
     title: str = ormar.Text()
     category: PolicyCategory = ormar.Text(choices=list(PolicyCategory))
     created_at: datetime = ormar.DateTime()
