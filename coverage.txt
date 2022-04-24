@@ -1,0 +1,31 @@
+============================= test session starts ==============================
+platform linux -- Python 3.10.4, pytest-7.1.1, pluggy-1.0.0
+rootdir: /home/jake/Code/VATUSA/api
+plugins: cov-3.0.0, anyio-3.5.0, order-1.0.1
+collected 0 items
+
+
+---------- coverage: platform linux, python 3.10.4-final-0 -----------
+Name                              Stmts   Miss  Cover
+-----------------------------------------------------
+app/v3/core/events.py                 7      7     0%
+app/v3/database/connection.py        10     10     0%
+app/v3/database/events.py            12     12     0%
+app/v3/main.py                       37     37     0%
+app/v3/models/api_access_log.py      14     14     0%
+app/v3/models/base_model.py           8      8     0%
+app/v3/models/comment.py             14     14     0%
+app/v3/models/facility.py            14     14     0%
+app/v3/models/policy.py              18     18     0%
+app/v3/models/promotion.py           16     16     0%
+app/v3/models/role.py                 9      9     0%
+app/v3/models/solo_cert.py           15     15     0%
+app/v3/models/ticket.py              13     13     0%
+app/v3/models/training.py            24     24     0%
+app/v3/models/transfer.py            22     22     0%
+app/v3/models/user.py                43     43     0%
+app/v3/models/website_log.py         17     17     0%
+-----------------------------------------------------
+TOTAL                               293    293     0%
+
+============================ no tests ran in 0.03s =============================
