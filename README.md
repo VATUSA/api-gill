@@ -1,12 +1,13 @@
-
 # VATUSA API
 
 ## Dev Requirements
- * Python 3.10
- * Docker
- * virtualenv
+
+- Python 3.10
+- Docker
+- virtualenv
 
 ## Setup
+
 1. Create virtualenv: `python -m venv venv`
 2. Activate virtualenv: `source venv/bin/activate`
 3. Install dependencies: `pip install -r requirements.txt`
@@ -17,6 +18,20 @@
 * Create tests for any code possible. Run tests with `pytest --cache-clear --cov=app tests > coverage.txt`, include the coverage report in commits.
 
 ## Running the app
-* Using docker: `docker-compose up -d --force-recreate` docker will spin up a database, run the db migrations and start the api
-* Without docker: `python -m alembic upgrade head && python -m uvicorn app.v1.main:api --reload`
-* Note, without docker you will need to adjust various environment settings to connect to a local test database.
+
+### Docker
+
+```bash
+$> docker-compose up -d
+```
+
+### Without Docker
+
+This project uses a Makefile to define make "targets" which are really just scripts that run.
+
+```bash
+$> make migrate # runs all migrations
+$> make server # runs local server
+$> make dev # runs migrate and server together
+$> make rollback # rolls back all migrations
+```
